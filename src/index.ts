@@ -5,7 +5,11 @@ async function main(): Promise<void> {
   const repository = core.getInput('repository');
   const branchName = core.getInput('branchName');
 
-  if (branchName.match(/YD-[0-9]+-#[0-9]+/i) !== null) return;
+  if (branchName.match(/YD-[0-9]+-#[0-9]+/i) !== null) {
+    console.log('this branch is not for backlog issue');
+    return;
+  }
+
   const backlogNo = branchName.match(/YD-[0-9]+/i)?.toString().toUpperCase();
 
   const prRef = core.getInput('pr');
