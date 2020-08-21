@@ -34,7 +34,10 @@ async function main(): Promise<void> {
     const existPrUrl = (res.data.customFields as any[]).find((f) => f.id.toString() === prUrlAttrId).value as string | null;
 
     // アップデートがない場合はapiを叩かない
-    if (branchName === existBranchName && prUrl === existPrUrl) return;
+    if (branchName === existBranchName && prUrl === existPrUrl) {
+      console.log('No update');
+      return;
+    }
   } catch (e) {
     console.error(e)
     return;

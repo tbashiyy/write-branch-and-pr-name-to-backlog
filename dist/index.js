@@ -645,8 +645,10 @@ function main() {
                     existBranchName = res.data.customFields.find(function (f) { return f.id.toString() === branchAttrId; }).value;
                     existPrUrl = res.data.customFields.find(function (f) { return f.id.toString() === prUrlAttrId; }).value;
                     // アップデートがない場合はapiを叩かない
-                    if (branchName === existBranchName && prUrl === existPrUrl)
+                    if (branchName === existBranchName && prUrl === existPrUrl) {
+                        console.log('No update');
                         return [2 /*return*/];
+                    }
                     return [3 /*break*/, 4];
                 case 3:
                     e_1 = _c.sent();
