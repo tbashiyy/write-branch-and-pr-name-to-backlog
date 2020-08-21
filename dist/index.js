@@ -613,7 +613,7 @@ var core = __importStar(__webpack_require__(967));
 function main() {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function () {
-        var repository, branchName, backlogNo, prRef, apiKey, prUrl, branchAttrId, prUrlAttrId, backlogEndpoint, backlogApi, data, url, res, e_1;
+        var repository, branchName, backlogNo, prRef, apiKey, prUrl, branchAttrId, prUrlAttrId, backlogEndpoint, backlogApi, data, url, res, existBranchName, existPrUrl, e_1, res, e_2;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
@@ -639,16 +639,31 @@ function main() {
                     _c.label = 1;
                 case 1:
                     _c.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, backlogApi.patch(url, data, { params: { apiKey: apiKey } })];
+                    return [4 /*yield*/, backlogApi.get(url, { params: { apiKey: apiKey } })];
                 case 2:
                     res = _c.sent();
-                    console.log(res);
+                    existBranchName = res.data.customFields.find(function (f) { return f.id === branchAttrId; }).value;
+                    existPrUrl = res.data.customFields.find(function (f) { return f.id === prUrlAttrId; }).value;
+                    // アップデートがない場合はapiを叩かない
+                    if (branchName === existBranchName && prUrl === existPrUrl)
+                        return [2 /*return*/];
                     return [3 /*break*/, 4];
                 case 3:
                     e_1 = _c.sent();
-                    console.log(e_1);
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
+                    console.error(e_1);
+                    return [2 /*return*/];
+                case 4:
+                    _c.trys.push([4, 6, , 7]);
+                    return [4 /*yield*/, backlogApi.patch(url, data, { params: { apiKey: apiKey } })];
+                case 5:
+                    res = _c.sent();
+                    console.log(res);
+                    return [3 /*break*/, 7];
+                case 6:
+                    e_2 = _c.sent();
+                    console.error(e_2);
+                    return [2 /*return*/];
+                case 7: return [2 /*return*/];
             }
         });
     });
