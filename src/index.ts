@@ -30,9 +30,8 @@ async function main(): Promise<void> {
 
   try {
     const res = await backlogApi.get(url, { params: { apiKey }});
-    console.log((res.data.customFields as any[]).map((f) => f.id));
-    const existBranchName = (res.data.customFields as any[]).filter((f) => f.id === branchAttrId)[0].value  as string | null;
-    const existPrUrl = (res.data.customFields as any[]).filter((f) => f.id === prUrlAttrId)[0].value as string | null;
+    const existBranchName = (res.data.customFields as any[]).find((f) => f.id.toString() === branchAttrId).value  as string | null;
+    const existPrUrl = (res.data.customFields as any[]).find((f) => f.id.toString() === prUrlAttrId).value as string | null;
 
     // アップデートがない場合はapiを叩かない
     if (branchName === existBranchName && prUrl === existPrUrl) return;
