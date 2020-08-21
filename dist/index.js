@@ -642,6 +642,7 @@ function main() {
                     return [4 /*yield*/, backlogApi.get(url, { params: { apiKey: apiKey } })];
                 case 2:
                     res = _c.sent();
+                    console.log(res.data.customFields);
                     existBranchName = res.data.customFields.find(function (f) { return f.id === branchAttrId; }).value;
                     existPrUrl = res.data.customFields.find(function (f) { return f.id === prUrlAttrId; }).value;
                     // アップデートがない場合はapiを叩かない
