@@ -30,6 +30,7 @@ async function main(): Promise<void> {
 
   try {
     const res = await backlogApi.get(url, { params: { apiKey }});
+    console.log(res.data.customFields);
     const existBranchName = (res.data.customFields as any[]).find((f) => f.id === branchAttrId).value as string
     const existPrUrl = (res.data.customFields as any[]).find((f) => f.id === prUrlAttrId).value as string
 
