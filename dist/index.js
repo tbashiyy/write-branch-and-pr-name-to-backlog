@@ -642,9 +642,9 @@ function main() {
                     return [4 /*yield*/, backlogApi.get(url, { params: { apiKey: apiKey } })];
                 case 2:
                     res = _c.sent();
-                    console.log(res.data.customFields);
-                    existBranchName = res.data.customFields.find(function (f) { return f.id === branchAttrId; }).value;
-                    existPrUrl = res.data.customFields.find(function (f) { return f.id === prUrlAttrId; }).value;
+                    console.log(res.data.customFields.map(function (f) { return f.id; }));
+                    existBranchName = res.data.customFields.filter(function (f) { return f.id === branchAttrId; })[0].value;
+                    existPrUrl = res.data.customFields.filter(function (f) { return f.id === prUrlAttrId; })[0].value;
                     // アップデートがない場合はapiを叩かない
                     if (branchName === existBranchName && prUrl === existPrUrl)
                         return [2 /*return*/];
