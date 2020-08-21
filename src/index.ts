@@ -27,11 +27,25 @@ async function main(): Promise<void> {
 
   const data = `customField_${branchAttrId}=${branchName}&customField_${prUrlAttrId}=${prUrl}`;
   const url = `/issues/${backlogNo}`;
+
+  try {
+    const res = await backlogApi.get(url, { params: { apiKey }});
+    const existBranchName = (res.data.customFields as any[]).find((f) => f.id === branchAttrId).value as string
+    const existPrUrl = (res.data.customFields as any[]).find((f) => f.id === prUrlAttrId).value as string
+
+    // アップデートがない場合はapiを叩かない
+    if (branchName === existBranchName && prUrl === existPrUrl) return;
+  } catch (e) {
+    console.error(e)
+    return;
+  }
+
   try {
     const res = await backlogApi.patch(url, data, { params: { apiKey }});
     console.log(res);
   } catch(e) {
-    console.log(e);
+    console.error(e);
+    return;
   }
 }
 
